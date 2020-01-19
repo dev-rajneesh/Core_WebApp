@@ -1,0 +1,34 @@
+In project folder open CMD prompt as admin
+
+cmd - "dotnet ef --help""
+
+error.
+
+---------------------
+dotnet tool install --global dotnet-ef
+THis works with green output
+
+THis will install EF globally for this syste. on path
+C:\Users\admin\.dotnet\tools
+
+Now run - "dotnet ef --help"
+still error
+
+run this
+"dotnet tool install --global dotnet-ef --version 3.1.0""
+maybe already installed
+
+-------Command for migration---------
+dotnet ef migrations add firstMigration -c Core_WebApp.Models.AppDbContext
+
+Error so uninstall 3.1.0 and install 3.1.0 again
+"dotnet tool uninstall --global dotnet-ef""
+
+Install new version, run this
+"dotnet tool install --global dotnet-ef --version 3.1.0"
+
+Run migrations command again
+"dotnet ef migrations add firstMigration -c Core_WebApp.Models.AppDbContext""
+
+Update DB
+"dotnet ef database update -c Core_WebApp.Models.AppDbContext"
