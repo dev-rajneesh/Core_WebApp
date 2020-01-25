@@ -27,6 +27,7 @@ namespace Core_WebApp.Controllers
             return View(res);
         }
 
+        // test
         public async Task<IActionResult> Create()
         {
             return View(new Category());
