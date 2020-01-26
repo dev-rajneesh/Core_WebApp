@@ -40,10 +40,13 @@ namespace Core_WebApp.Models
         [Required(ErrorMessage = "Description is must")]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = "Product Price is must")]
+        public int ProductPrice { get; set; }
+
         [Required(ErrorMessage = "CategoryRowId is must")]
         public int CategoryRowId { get; set; }
 
-        // Foreign Key
+        // Foreign Key      
         public Category Category { get; set; }
     }
 }

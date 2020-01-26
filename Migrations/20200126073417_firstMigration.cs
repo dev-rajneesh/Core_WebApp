@@ -31,24 +31,24 @@ namespace Core_WebApp.Migrations
                     ProductName = table.Column<string>(nullable: false),
                     Manufacturer = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    CategoryRowId = table.Column<int>(nullable: false),
-                    CategoryRowId1 = table.Column<int>(nullable: true)
+                    ProductPrice = table.Column<int>(nullable: false),
+                    CategoryRowId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.ProductRowId);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryRowId1",
-                        column: x => x.CategoryRowId1,
+                        name: "FK_Products_Categories_CategoryRowId",
+                        column: x => x.CategoryRowId,
                         principalTable: "Categories",
                         principalColumn: "CategoryRowId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CategoryRowId1",
+                name: "IX_Products_CategoryRowId",
                 table: "Products",
-                column: "CategoryRowId1");
+                column: "CategoryRowId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

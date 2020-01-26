@@ -46,11 +46,13 @@ namespace Core_WebApp.Services
 
         public async Task<Product> UpdateAsync(int id, Product entity)
         {
+            entity.Category = new Category();
             var res = await ctx.Products.FindAsync(id);
             if (res != null)
             {
                 res.ProductId = entity.ProductId;
-                res.ProductName = entity.ProductName;                
+                res.ProductName = entity.ProductName;
+                res.Category.CategoryRowId = entity.Category.CategoryRowId;
 
                 //var e = ctx.Categories.Update(res);
                 await ctx.SaveChangesAsync();

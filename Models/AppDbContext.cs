@@ -21,7 +21,13 @@ namespace Core_WebApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
+
+            // Navigation with One to Many Relationship and Foreign Key
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(b => b.Products)
+                .HasForeignKey(p => p.CategoryRowId);
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
