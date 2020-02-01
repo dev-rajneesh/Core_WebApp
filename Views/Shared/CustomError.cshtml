@@ -1,0 +1,18 @@
+﻿<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+<div class="container">
+    <h2>
+        Error Occured in Controller @ViewData["controller"]
+    </h2>
+
+    <h2>
+        Error Occured in Action Method @ViewData["action"]
+    </h2>
+    <h2>
+        Error message is @ViewData["message"]
+    </h2>
+</div>
+
+<br />
+<a asp-action="@ViewData["action"]" asp-controller="@ViewData["controller"]">Go Back</a>

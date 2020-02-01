@@ -72,5 +72,11 @@ namespace Core_WebApp.Controllers
             }
             return View("Index"); 
         }
+
+        public IActionResult ShowProducts(int id)
+        {
+            TempData["CategoryRowId"] = id;
+            return RedirectToAction("Index", "Product"); // return to the Index View from ProductController
+        }
     }
 }

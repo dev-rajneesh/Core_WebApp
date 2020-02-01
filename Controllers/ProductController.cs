@@ -22,11 +22,27 @@ namespace Core_WebApp.Controllers
         }
 
         // GET: Product
-        public async Task<IActionResult> Index() 
+        public async Task<IActionResult> Index()
         {
-            var res = await repository.GetAsync();
-            ViewBag.CategoryRowId = new SelectList(await catRepository.GetAsync(), "CategoryRowId", "CategoryName");
-            return View(res);
+            //var res = await repository.GetAsync();
+            //ViewBag.CategoryRowId = new SelectList(await catRepository.GetAsync(), "CategoryRowId", "CategoryName");
+            //return View(res);
+
+            List<Product> products = new List<Product>();
+            // read data from TempData
+            int CatRowId = Convert.ToInt32(TempData["CategoryRowId"]);
+            if (CatRowId != 0)
+            {
+                products = (from p in await repository.GetAsync()
+                            where p.CategoryRowId == CatRowId
+                            select p).ToList();
+            }
+            else
+            {
+                products = repository.GetAsync().Result.ToList();
+            }
+            TempData.Keep();
+            return View(products); // return the Index View
         }
 
         // GET: Product/Details/5
@@ -38,7 +54,9 @@ namespace Core_WebApp.Controllers
         // GET: Product/Create
         public async Task<ActionResult> Create()
         {
+            var r = TempData["CategoryRowId"];
             var res = new Product();
+            //res = TempData["FormData"];
             ViewBag.CategoryRowId = new SelectList(await catRepository.GetAsync(), "CategoryRowId", "CategoryName");
 
             return View(res);
@@ -48,13 +66,37 @@ namespace Core_WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Product product)
         {
-            // Check for the validation
-            if (ModelState.IsValid)
-            {
-                var res = await repository.CreateAsync(product);
-                return RedirectToAction("Index");
-            }
-            return View(product); // stay on current view with validation error messages
+            // We will later remove the try catch and handle the exceptions using filters at a generic level
+            //try
+            //{
+            Product formData = product;
+            TempData["FormData"] = product;
+                // check for the validation
+                if (ModelState.IsValid)
+                {
+                    if(product.ProductPrice < 0)
+                    {
+                        throw new Exception("Product price cannot be negative");
+                    }
+                    var res = await repository.CreateAsync(product);
+                    return RedirectToAction("Index"); // return to the Index View
+                }
+                else
+                {
+                    ViewBag.CategoryRowId = new SelectList(await catRepository.GetAsync(),
+                  "CategoryRowId", "CategoryName");
+                    return View(product); // stey on create view with validation error messages
+                }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return View("Error", new ErrorViewModel()
+            //    {
+            //        ControllerName = this.RouteData.Values["controller"].ToString(),
+            //        ActionName = this.RouteData.Values["action"].ToString(),
+            //        ErrorMessage = ex.Message
+            //    });
+            //}
         }
 
         // GET: Product/Edit/5
@@ -88,6 +130,6 @@ namespace Core_WebApp.Controllers
                 return RedirectToAction("Index");
             }
             return View("Index");
-        }                
+        }
     }
 }

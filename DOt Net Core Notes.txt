@@ -32,3 +32,23 @@ Run migrations command again
 
 Update DB
 "dotnet ef database update -c Core_WebApp.Models.AppDbContext"
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+01-Feb-2020
+
+Exceptionmanagement
+	Action Filters
+security 
+views 
+deployment 
+==============
+Problem Statement: 
+Provide a facility to end user to check whether the product id is repeated. Show an appropriate error message to the end user.
+
+Problem Statement:	
+Please log errors in database
+
+Problem Statement: 
+From error page when u navigate to create, we want the entire object again. SO that user does not need to fill the form again
+==============

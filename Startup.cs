@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Core_WebApp.Services;
+using Core_WebApp.Custom_Filter;
 
 namespace Core_WebApp
 {
@@ -43,8 +44,12 @@ namespace Core_WebApp
         // 1st method that willbe invoked when program.cs makes a call. It loads all dependencies
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(); // Only for Web API controller        
-            services.AddControllersWithViews(); // MVC request and WebAPI request processing        
+            services.AddControllers(); // Only for Web API controller      
+
+            // MVC request and WebAPI request processing
+            services.AddControllersWithViews(
+                options => options.Filters.Add(typeof(MyExceptionFilter))
+                );
 
             // Register the DbContext in the DI container
             services.AddDbContext<AppDbContext>(options =>
