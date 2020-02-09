@@ -8,6 +8,8 @@ error.
 dotnet tool install --global dotnet-ef
 THis works with green output
 
+If problem persists. Restart the command prompt again and try the commands again. It works.
+
 THis will install EF globally for this syste. on path
 C:\Users\admin\.dotnet\tools
 

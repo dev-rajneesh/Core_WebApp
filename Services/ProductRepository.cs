@@ -39,6 +39,13 @@ namespace Core_WebApp.Services
             return await ctx.Products.ToListAsync();
         }
 
+        //public async Task<bool> GetProductidAsync(string productid)
+        //public bool GetProductidAsync(string productid)
+        //{
+        //    var res =  ctx.Products.ToListAsync().Result.ToList().Where(x => x.ProductId.ToString().ToLower() == productid.ToLower());
+        //    return (res.Count() > 0);
+        //}
+
         public async Task<Product> GetAsync(int id)
         {
             return await ctx.Products.FindAsync(id);

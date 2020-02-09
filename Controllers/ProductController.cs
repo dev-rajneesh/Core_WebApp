@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core_WebApp.Models;
 using Core_WebApp.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -56,7 +57,7 @@ namespace Core_WebApp.Controllers
         {
             var r = TempData["CategoryRowId"];
             var res = new Product();
-            //res = TempData["FormData"];
+            res = (Product)TempData["FormData"];
             ViewBag.CategoryRowId = new SelectList(await catRepository.GetAsync(), "CategoryRowId", "CategoryName");
 
             return View(res);
@@ -71,8 +72,8 @@ namespace Core_WebApp.Controllers
             //{
             Product formData = product;
             TempData["FormData"] = product;
-                // check for the validation
-                if (ModelState.IsValid)
+            // check for the validation
+            if (ModelState.IsValid)
                 {
                     if(product.ProductPrice < 0)
                     {
@@ -130,6 +131,22 @@ namespace Core_WebApp.Controllers
                 return RedirectToAction("Index");
             }
             return View("Index");
+        }
+
+        //[HttpPost][HttpGet] // 1 way of doing
+        [AcceptVerbs("Get", "Post")] // 2nd way of doing the same
+        [AllowAnonymous] // Use this if unregistered users are trying to create a new product
+        // If Remote attribute is not used in Entity Product. THis validation will be fired only on post. 
+        // By using remote attribute we trigger this validation as the user types
+        public async Task<JsonResult> CheckUserNameExists(string productid)
+        {
+            var res = repository.GetAsync().Result.Where(x => x.ProductId.ToString().ToLower() == productid.ToLower()).Count();
+            
+            if(res == 0)
+            {
+                return Json(true);
+            }
+            return Json($"The Product Id {productid} is already in use");
         }
     }
 }

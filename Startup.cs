@@ -61,6 +61,7 @@ namespace Core_WebApp
             // 1st parameter is ServiceType, 2nd param is called Implementation
             services.AddScoped<IRepository<Category, int>, CategoryRepository>();
             services.AddScoped<IRepository<Product, int>, ProductRepository>();
+            services.AddScoped<IRepository<ErrorLog, int>, ErrorRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

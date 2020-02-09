@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Core_WebApp.Models
 {
-   public class Category
+    public class Category
     {
         [Key] // Primary Identity Key
         public int CategoryRowId { get; set; }
 
-        [Required(ErrorMessage ="Category Id is must")]
+        [Required(ErrorMessage = "Category Id is must")]
         public string CategoryId { get; set; }
 
         [Required(ErrorMessage = "Category Name is must")]
@@ -29,6 +30,7 @@ namespace Core_WebApp.Models
         public int ProductRowId { get; set; }
 
         [Required(ErrorMessage = "Product Id is must")]
+        [Remote("CheckUserNameExists", "Product", HttpMethod = "POST", ErrorMessage = "Product Id already exists. Please enter a new one.")]
         public int ProductId { get; set; }
 
         [Required(ErrorMessage = "ProductName is must")]
@@ -48,6 +50,15 @@ namespace Core_WebApp.Models
 
         // Foreign Key      
         public Category Category { get; set; }
+    }
+
+    public class ErrorLog
+    {
+        [Key]
+        public int ErrorLogId { get; set; }
+        public string ErrorMessage { get; set; }
+        public string ErrorDetails { get; set; }
+        public string StackTrace { get; set; }
     }
 }
 

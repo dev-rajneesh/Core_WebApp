@@ -31,5 +31,6 @@ namespace Core_WebApp.Models
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
     }
 }

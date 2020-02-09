@@ -1,4 +1,5 @@
 ﻿using Core_WebApp.Models;
+using Core_WebApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -14,11 +15,14 @@ namespace Core_WebApp.Custom_Filter
     {
         private readonly IModelMetadataProvider _metadataprovider;
         private readonly AppDbContext _appDbContext;
-        public MyExceptionFilter(IModelMetadataProvider metadataprovider, AppDbContext appDbContext)
+        private readonly IRepository<ErrorLog, int> _errorRepository;
+        public MyExceptionFilter(IModelMetadataProvider metadataprovider, AppDbContext appDbContext, IRepository<ErrorLog, int> errorRepository)
         {
             this._metadataprovider = metadataprovider;
             this._appDbContext = appDbContext; // Add to save error to DB
+            this._errorRepository = errorRepository;
         }
+
         public override void OnException(ExceptionContext context)
         {
             //base.OnException(context);
@@ -46,6 +50,15 @@ namespace Core_WebApp.Custom_Filter
 
             // Setting result in HttpResponse
             context.Result = result;
+
+            // Log Error Details to database
+            ErrorLog errorLog = new ErrorLog();
+            errorLog.ErrorMessage = message;
+            errorLog.ErrorDetails = "Controller: " + context.RouteData.Values["controller"].ToString() + " " +
+                                    "Action: " + context.RouteData.Values["action"].ToString();
+            errorLog.StackTrace = context.Exception.StackTrace;
+
+            _errorRepository.CreateAsync(errorLog);
         }
     }
 }
