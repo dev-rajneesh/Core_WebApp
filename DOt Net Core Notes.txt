@@ -53,4 +53,9 @@ Please log errors in database
 
 Problem Statement: 
 From error page when u navigate to create, we want the entire object again. SO that user does not need to fill the form again
+Use link in whatsapp group
+
+Problem Statement: 
+Create default admin user which will create roles and users
+Hint: Configure method contains logic for default admin user
 ==============
