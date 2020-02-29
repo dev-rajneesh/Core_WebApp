@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Core_WebApp.Services;
 using Core_WebApp.Custom_Filter;
+using Core_WebApp.CustomMiddleware;
 
 namespace Core_WebApp
 {
@@ -48,7 +49,7 @@ namespace Core_WebApp
 
             // MVC request and WebAPI request processing
             services.AddControllersWithViews(
-                options => options.Filters.Add(typeof(MyExceptionFilter))
+                //options => options.Filters.Add(typeof(MyExceptionFilter))
                 );
 
             // Register the DbContext in the DI container
@@ -79,6 +80,8 @@ namespace Core_WebApp
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseCustomExceptionHandlerMiddleware();
 
             // Uses wwwRoot to read static files like js, css, img or any other custom files 
             // to render Http Response
