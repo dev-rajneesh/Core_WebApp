@@ -14,14 +14,14 @@ namespace Core_WebApp.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
-                services.AddDbContext<AuthDbContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("AppDbContextConnection")));
+            //builder.ConfigureServices((context, services) => {
+            //    services.AddDbContext<AuthDbContext>(options =>
+            //        options.UseSqlServer(
+            //            context.Configuration.GetConnectionString("AppDbContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<AuthDbContext>();
-            });
+            //    services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //        .AddEntityFrameworkStores<AuthDbContext>();
+            //});
         }
     }
 }

@@ -35,6 +35,12 @@ Run migrations command again
 Update DB
 "dotnet ef database update -c Core_WebApp.Models.AppDbContext"
 
+Auth
+Run migrations command again
+"dotnet ef migrations add IdentityMigration -c Core_WebApp.Data.AuthDbContext""
+
+Update DB
+"dotnet ef database update -c Core_WebApp.Data.AuthDbContext"
 -------------------------------------------------------------------
 -------------------------------------------------------------------
 01-Feb-2020
