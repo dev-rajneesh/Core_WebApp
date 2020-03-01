@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core_WebApp.Data
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AuthDbContext : IdentityDbContext<IdentityUser>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options)
+        public AuthDbContext(DbContextOptions<AuthDbContext> options)
             : base(options)
         {
         }

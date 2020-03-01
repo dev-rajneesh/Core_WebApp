@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Core_WebApp.Models;
 using Core_WebApp.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Core_WebApp.Controllers
 {
@@ -21,6 +22,7 @@ namespace Core_WebApp.Controllers
             this.repository = repository;
         }
 
+        [Authorize(Policy = "ReadPolicy")]
         public async Task<IActionResult> Index()
         {
             var res = await repository.GetAsync();
@@ -28,6 +30,7 @@ namespace Core_WebApp.Controllers
         }
 
         // test
+        [Authorize(Policy = "WritePolicy")]
         public async Task<IActionResult> Create()
         {
             return View(new Category());

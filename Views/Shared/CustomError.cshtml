@@ -1,6 +1,9 @@
 ﻿<h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
-
+@{
+    var data = TempData["Prd"];
+    TempData.Keep();
+}
 <div class="container">
     <h2>
         Error Occured in Controller @ViewData["controller"]

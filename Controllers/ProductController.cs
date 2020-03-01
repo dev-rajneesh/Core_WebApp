@@ -56,6 +56,12 @@ namespace Core_WebApp.Controllers
         public async Task<ActionResult> Create()
         {
             var r = TempData["CategoryRowId"];
+            if (TempData.Values.Count > 0)
+            {
+                var prd = TempData["Prd"];
+                return View((Product)prd);
+            }
+
             var res = new Product();
             res = (Product)TempData["FormData"];
             ViewBag.CategoryRowId = new SelectList(await catRepository.GetAsync(), "CategoryRowId", "CategoryName");
